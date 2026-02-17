@@ -1,18 +1,5 @@
 
-const express = require('express');
-const path = require('path');
-
-const app = express();
-const port = process.env.PORT || 3000;
-
-// Serve static files from the root directory
-app.use(express.static(path.join(__dirname, '')));
-
-// For any other request, send the index.html file
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+// This file is no longer needed for deployment to GitHub Pages, 
+// as it's a static hosting service and cannot run a Node.js server.
+// This file can be safely deleted.
+// It was previously intended for server-based hosting platforms like Railway.

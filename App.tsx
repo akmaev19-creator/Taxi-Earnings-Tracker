@@ -13,6 +13,7 @@ import useTheme from './hooks/useTheme';
 
 const App: React.FC = () => {
     const [shifts, setShifts] = useState<Shift[]>([]);
+    const [defaultRent, setDefaultRent] = useState<number>(0);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [detailView, setDetailView] = useState<{ period: Period, date: Date } | null>(null);
     const [editingShift, setEditingShift] = useState<Shift | null>(null);
@@ -20,23 +21,27 @@ const App: React.FC = () => {
     const { theme, setTheme } = useTheme();
 
 
-    // Load shifts from localStorage on initial render
+    // Load shifts and settings from localStorage on initial render
     useEffect(() => {
         try {
             const storedShifts = localStorage.getItem('taxiShifts');
             if (storedShifts) {
                 const parsedShifts: Shift[] = JSON.parse(storedShifts);
-                // Ensure dates are parsed correctly
                 const shiftsWithDateObjects = parsedShifts.map(shift => ({
                     ...shift,
                     date: new Date(shift.date),
-                    fines: shift.fines || [], // ensure fines array exists
-                    selfEmployedTax: shift.selfEmployedTax || 0, // ensure selfEmployedTax exists
+                    fines: shift.fines || [],
+                    selfEmployedTax: shift.selfEmployedTax || 0,
                 }));
                 setShifts(shiftsWithDateObjects);
             }
+
+            const storedRent = localStorage.getItem('defaultRent');
+            if (storedRent) {
+                setDefaultRent(Number(storedRent));
+            }
         } catch (error) {
-            console.error("Failed to load or parse shifts from localStorage", error);
+            console.error("Failed to load data from localStorage", error);
         }
     }, []);
 
@@ -50,6 +55,12 @@ const App: React.FC = () => {
     }, [shifts]);
 
     const handleSaveShift = useCallback((savedShift: Shift) => {
+        // Update default rent for future shifts
+        if (savedShift.rentCost > 0) {
+            setDefaultRent(savedShift.rentCost);
+            localStorage.setItem('defaultRent', savedShift.rentCost.toString());
+        }
+
         setShifts(prevShifts => {
             const isEditing = prevShifts.some(s => s.id === savedShift.id);
             let updatedShifts;
@@ -76,10 +87,11 @@ const App: React.FC = () => {
         setDetailView(null);
     }, []);
 
-    const handleStartEdit = (shift: Shift) => {
+    const handleStartEdit = useCallback((shift: Shift) => {
         setEditingShift(shift);
         setIsFormVisible(true);
-    };
+        setDetailView(null); // Close detail view if editing from there
+    }, []);
 
     const handleAddNew = () => {
         setEditingShift(null);
@@ -132,7 +144,9 @@ const App: React.FC = () => {
                             period={detailView.period}
                             date={detailView.date}
                             shifts={getShiftsForPeriod}
-                            onBack={handleClearDetails} 
+                            onBack={handleClearDetails}
+                            onDeleteShift={handleDeleteShift}
+                            onEditShift={handleStartEdit}
                         />
                     ) : (
                         <>
@@ -149,7 +163,8 @@ const App: React.FC = () => {
                                     <ShiftForm 
                                         initialData={editingShift} 
                                         onSave={handleSaveShift} 
-                                        onCancel={handleCancelForm} 
+                                        onCancel={handleCancelForm}
+                                        defaultRent={defaultRent}
                                     />
                                 ) : (
                                     <>
@@ -180,6 +195,11 @@ const App: React.FC = () => {
                     onClose={() => setIsSettingsVisible(false)}
                     currentTheme={theme}
                     onThemeChange={setTheme}
+                    defaultRent={defaultRent}
+                    onDefaultRentChange={(val) => {
+                        setDefaultRent(val);
+                        localStorage.setItem('defaultRent', val.toString());
+                    }}
                 />
             </div>
         </div>
