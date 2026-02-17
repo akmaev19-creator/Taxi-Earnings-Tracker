@@ -1,12 +1,11 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
-export type Theme = 'light' | 'dark' | 'cyber';
+export type Theme = 'light' | 'dark';
 
 export const themes: { id: Theme; name: string }[] = [
     { id: 'light', name: 'Светлая' },
     { id: 'dark', name: 'Тёмная' },
-    { id: 'cyber', name: 'Киберпанк' },
 ];
 
 const useTheme = () => {
@@ -25,18 +24,13 @@ const useTheme = () => {
     
     useEffect(() => {
         const root = window.document.documentElement;
-        const body = window.document.body;
         
         root.classList.remove('light', 'dark');
-        body.classList.remove('theme-cyber');
 
         if (theme === 'light') {
             root.classList.add('light');
         } else {
-            root.classList.add('dark'); // Dark is the default for both dark and cyber themes at the root level
-            if(theme === 'cyber'){
-                body.classList.add('theme-cyber')
-            }
+            root.classList.add('dark');
         }
         
         localStorage.setItem('app-theme', theme);

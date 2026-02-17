@@ -36,7 +36,7 @@ const formatDateForInput = (date: Date): string => {
 const InputField: React.FC<{ label: string; id: string; type?: string; value: string | number | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; placeholder?: string, unit?: string, info?: string }> = 
 ({ label, id, type = 'text', value, onChange, placeholder, unit, info }) => (
     <div className="mb-4">
-        <label htmlFor={id} className="block text-sm font-medium text-slate-600 dark:text-slate-400 theme-cyber:text-slate-400 mb-1">{label}</label>
+        <label htmlFor={id} className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">{label}</label>
         <div className="relative">
             <input
                 id={id}
@@ -44,7 +44,7 @@ const InputField: React.FC<{ label: string; id: string; type?: string; value: st
                 value={value ?? ''}
                 onChange={onChange}
                 placeholder={placeholder || '0'}
-                className="w-full bg-gray-100 dark:bg-gray-700 theme-cyber:bg-gray-900/50 text-slate-900 dark:text-slate-100 theme-cyber:text-cyber-text px-3 py-2 border border-gray-300 dark:border-gray-600 theme-cyber:border-cyber-secondary/30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 theme-cyber:focus:ring-cyber-primary focus:border-green-500 theme-cyber:focus:border-cyber-primary"
+                className="w-full bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-slate-100 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 step={type === 'number' ? '0.01' : undefined}
             />
             {unit && <span className="absolute inset-y-0 right-3 flex items-center text-slate-500 dark:text-slate-400">{unit}</span>}
@@ -54,8 +54,8 @@ const InputField: React.FC<{ label: string; id: string; type?: string; value: st
 );
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-    <div className="bg-white dark:bg-gray-900/50 theme-cyber:bg-gray-900/30 p-4 rounded-lg mb-6">
-        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-200 theme-cyber:text-cyber-secondary border-b border-gray-200 dark:border-gray-700 theme-cyber:border-cyber-secondary/30 pb-2 mb-4">{title}</h3>
+    <div className="bg-white dark:bg-gray-900/50 p-4 rounded-lg mb-6">
+        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-200 border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">{title}</h3>
         {children}
     </div>
 );
@@ -103,7 +103,7 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ onSave, onCancel, initialData }) 
         const { id, value, type, checked } = e.target;
         setFormData(prev => ({
             ...prev,
-            [id]: type === 'checkbox' ? checked : (type === 'number' ? (value === '' ? null : parseFloat(value)) : value),
+            [id]: type === 'checkbox' ? checked : (type === 'number' ? (value === '' ? null : Number(value)) : value),
         }));
     };
 
@@ -180,7 +180,7 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ onSave, onCancel, initialData }) 
                 <InputField label="Налог СМЗ" id="selfEmployedTax" type="number" value={formData.selfEmployedTax} onChange={handleChange} unit="₽" />
                  <div className="flex items-center mt-4">
                     <input type="checkbox" id="deductRent" checked={formData.deductRent} onChange={handleChange} className="h-4 w-4 text-green-500 bg-gray-200 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-green-600 focus:ring-offset-gray-800"/>
-                    <label htmlFor="deductRent" className="ml-2 block text-sm text-slate-800 dark:text-slate-300 theme-cyber:text-cyber-text">Удержать аренду сегодня</label>
+                    <label htmlFor="deductRent" className="ml-2 block text-sm text-slate-800 dark:text-slate-300">Удержать аренду сегодня</label>
                 </div>
             </Section>
             
@@ -192,18 +192,18 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ onSave, onCancel, initialData }) 
                         <button type="button" onClick={() => removeFine(index)} className="mb-4 p-2 text-slate-500 hover:text-red-500 rounded-full"><TrashIcon className="w-5 h-5"/></button>
                     </div>
                 ))}
-                <button type="button" onClick={addFine} className="text-green-500 hover:text-green-400 dark:text-green-400 dark:hover:text-green-300 theme-cyber:text-cyber-primary theme-cyber:hover:text-pink-400 font-semibold text-sm">+ Добавить штраф</button>
+                <button type="button" onClick={addFine} className="text-green-500 hover:text-green-400 dark:text-green-400 dark:hover:text-green-300 font-semibold text-sm">+ Добавить штраф</button>
             </Section>
 
 
-            <div className="sticky bottom-0 bg-white dark:bg-gray-900 theme-cyber:bg-cyber-bg/80 backdrop-blur-sm py-4 px-4 -mx-4 border-t border-gray-200 dark:border-gray-700 theme-cyber:border-cyber-primary/20">
+            <div className="sticky bottom-0 bg-white dark:bg-gray-900 backdrop-blur-sm py-4 px-4 -mx-4 border-t border-gray-200 dark:border-gray-700">
                 <div className="text-center mb-4">
                     <p className="text-sm text-slate-600 dark:text-slate-400">Итого за смену (чистыми)</p>
                     <p className={`text-3xl font-extrabold ${calculations.net >= 0 ? 'text-green-500' : 'text-red-500'}`}>{calculations.net.toFixed(2)} ₽</p>
                 </div>
                 <div className="flex space-x-3">
-                    <button type="button" onClick={onCancel} className="w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-slate-800 dark:text-slate-200 theme-cyber:bg-gray-700 theme-cyber:hover:bg-gray-600 theme-cyber:text-cyber-text font-bold py-3 px-4 rounded-lg transition-colors">Отмена</button>
-                    <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white theme-cyber:bg-cyber-primary theme-cyber:hover:bg-pink-600 font-bold py-3 px-4 rounded-lg transition-colors">Сохранить</button>
+                    <button type="button" onClick={onCancel} className="w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-slate-800 dark:text-slate-200 font-bold py-3 px-4 rounded-lg transition-colors">Отмена</button>
+                    <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-colors">Сохранить</button>
                 </div>
             </div>
         </form>

@@ -14,9 +14,9 @@ interface PeriodDetailProps {
 }
 
 const StatPill: React.FC<{ label: string; value: string }> = ({ label, value }) => (
-    <div className="bg-gray-200 dark:bg-gray-800 theme-cyber:bg-gray-900/40 p-3 rounded-lg text-center flex-1">
-        <p className="text-xs text-slate-500 dark:text-slate-400 theme-cyber:text-slate-400">{label}</p>
-        <p className="font-semibold text-slate-900 dark:text-slate-200 theme-cyber:text-cyber-text">{value}</p>
+    <div className="bg-gray-200 dark:bg-gray-800 p-3 rounded-lg text-center flex-1">
+        <p className="text-xs text-slate-500 dark:text-slate-400">{label}</p>
+        <p className="font-semibold text-slate-900 dark:text-slate-200">{value}</p>
     </div>
 );
 
@@ -61,17 +61,17 @@ const PeriodDetail: React.FC<PeriodDetailProps> = ({ period, date, shifts, onBac
     return (
         <div>
             <header className="flex items-center mb-6 relative">
-                <button onClick={onBack} className="p-2 -ml-2 mr-4 text-slate-500 hover:text-slate-800 dark:hover:text-white theme-cyber:text-cyber-secondary theme-cyber:hover:text-cyber-primary absolute left-0">
+                <button onClick={onBack} className="p-2 -ml-2 mr-4 text-slate-500 hover:text-slate-800 dark:hover:text-white absolute left-0">
                     <ArrowLeftIcon className="w-6 h-6" />
                 </button>
                 <div className="text-center w-full">
-                    <h1 className="text-xl font-bold text-slate-900 dark:text-white theme-cyber:text-cyber-secondary">{header}</h1>
-                    <p className="text-2xl font-bold text-slate-800 dark:text-slate-300 theme-cyber:text-cyber-text mt-1">{summary.net.toFixed(2)} ₽</p>
+                    <h1 className="text-xl font-bold text-slate-900 dark:text-white">{header}</h1>
+                    <p className="text-2xl font-bold text-slate-800 dark:text-slate-300 mt-1">{summary.net.toFixed(2)} ₽</p>
                 </div>
             </header>
 
-            <div className="bg-white dark:bg-gray-900/50 theme-cyber:bg-gray-900/30 p-4 rounded-xl mb-6">
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-200 theme-cyber:text-cyber-secondary mb-3">{title}</h2>
+            <div className="bg-white dark:bg-gray-900/50 p-4 rounded-xl mb-6">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-200 mb-3">{title}</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     <StatPill label="Грязными" value={`${summary.gross.toFixed(2)} ₽`} />
                     <StatPill label="Пробег" value={`${summary.km} км`} />
@@ -84,13 +84,13 @@ const PeriodDetail: React.FC<PeriodDetailProps> = ({ period, date, shifts, onBac
             </div>
 
             <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-200 theme-cyber:text-cyber-secondary mb-3">Смены за период</h2>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-200 mb-3">Смены за период</h2>
                 {shifts.length > 0 ? (
                     <ul className="space-y-3">
                         {shifts.map(shift => (
-                           <li key={shift.id} className="bg-gray-100 dark:bg-gray-900/50 theme-cyber:bg-gray-900/30 p-4 rounded-lg flex justify-between items-center">
+                           <li key={shift.id} className="bg-gray-100 dark:bg-gray-900/50 p-4 rounded-lg flex justify-between items-center">
                                 <div>
-                                    <p className="font-semibold text-slate-800 dark:text-slate-200 theme-cyber:text-cyber-text">{new Date(shift.date).toLocaleDateString('ru-RU', {day: '2-digit', month: 'short'})}</p>
+                                    <p className="font-semibold text-slate-800 dark:text-slate-200">{new Date(shift.date).toLocaleDateString('ru-RU', {day: '2-digit', month: 'short'})}</p>
                                     <p className="text-sm text-slate-500 dark:text-slate-400">
                                         Пробег: {shift.odometerEnd - shift.odometerStart} км
                                     </p>

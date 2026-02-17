@@ -19,15 +19,15 @@ const PeriodSelector: React.FC<{ selected: Period; onSelect: (period: Period) =>
     ];
 
     return (
-        <div className="flex justify-center bg-gray-200 dark:bg-gray-800 theme-cyber:bg-gray-900/50 p-1 rounded-full mb-6">
+        <div className="flex justify-center bg-gray-200 dark:bg-gray-800 p-1 rounded-full mb-6">
             {periods.map(({ key, label }) => (
                 <button
                     key={key}
                     onClick={() => onSelect(key)}
                     className={`px-6 py-2 rounded-full text-sm font-semibold transition-colors w-full ${
                         selected === key
-                            ? 'bg-white text-slate-900 dark:bg-slate-600 dark:text-white theme-cyber:bg-cyber-primary theme-cyber:text-cyber-bg'
-                            : 'text-slate-600 dark:text-slate-400 theme-cyber:text-cyber-text hover:bg-gray-300 dark:hover:bg-gray-700'
+                            ? 'bg-white text-slate-900 dark:bg-slate-600 dark:text-white'
+                            : 'text-slate-600 dark:text-slate-400 hover:bg-gray-300 dark:hover:bg-gray-700'
                     }`}
                 >
                     {label}
@@ -130,12 +130,12 @@ const Stats: React.FC<StatsProps> = ({ shifts, onPeriodSelect }) => {
     }
 
     return (
-        <div className="mb-8 bg-gray-100 dark:bg-gray-900/50 p-4 rounded-xl theme-cyber:border theme-cyber:border-cyber-secondary/20">
+        <div className="mb-8 bg-gray-100 dark:bg-gray-900/50 p-4 rounded-xl">
             <PeriodSelector selected={period} onSelect={setPeriod} />
 
             <div className="text-center mb-6">
-                <p className="text-slate-500 dark:text-slate-400 theme-cyber:text-cyber-text">{getPeriodLabel()}</p>
-                <p className="text-5xl font-bold tracking-tighter text-slate-900 dark:text-white theme-cyber:text-cyber-secondary">{totalNetForPeriod.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} ₽</p>
+                <p className="text-slate-500 dark:text-slate-400">{getPeriodLabel()}</p>
+                <p className="text-5xl font-bold tracking-tighter text-slate-900 dark:text-white">{totalNetForPeriod.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} ₽</p>
             </div>
 
             <div className={`flex items-end h-48 px-2 ${period === 'month' ? 'space-x-4' : 'space-x-2'}`}>
@@ -145,9 +145,9 @@ const Stats: React.FC<StatsProps> = ({ shifts, onPeriodSelect }) => {
 
                     return (
                         <div key={date.toISOString()} className="flex flex-col items-center flex-1 h-full justify-end cursor-pointer group" onClick={() => onPeriodSelect(period, date)}>
-                            <p className="text-xs text-slate-700 dark:text-slate-300 theme-cyber:text-cyber-text mb-1 transition-opacity font-semibold">{net > 0 ? net.toFixed(0) : '0'}</p>
-                            <div className={`w-full max-w-[40px] rounded transition-all ${isToday && period === 'day' ? 'bg-blue-500 theme-cyber:bg-cyber-primary' : 'bg-gray-300 dark:bg-gray-700 group-hover:bg-gray-400 dark:group-hover:bg-gray-600 theme-cyber:bg-cyber-secondary/40 theme-cyber:group-hover:bg-cyber-secondary/70'}`} style={{ height: `${height}%` }}></div>
-                            <p className={`text-xs mt-2 ${isToday && period === 'day' ? 'text-blue-500 dark:text-blue-400 theme-cyber:text-cyber-primary' : 'text-slate-600 dark:text-slate-400 theme-cyber:text-cyber-text'}`}>{label}</p>
+                            <p className="text-xs text-slate-700 dark:text-slate-300 mb-1 transition-opacity font-semibold">{net > 0 ? net.toFixed(0) : '0'}</p>
+                            <div className={`w-full max-w-[40px] rounded transition-all ${isToday && period === 'day' ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-700 group-hover:bg-gray-400 dark:group-hover:bg-gray-600'}`} style={{ height: `${height}%` }}></div>
+                            <p className={`text-xs mt-2 ${isToday && period === 'day' ? 'text-blue-500 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}`}>{label}</p>
                         </div>
                     );
                 })}

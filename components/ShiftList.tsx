@@ -34,10 +34,10 @@ const ShiftItem: React.FC<{ shift: Shift; onDelete: (id: string) => void; onEdit
     }
 
     return (
-        <li className="bg-gray-100 dark:bg-gray-900/50 theme-cyber:bg-gray-900/30 p-4 rounded-lg flex justify-between items-center transition-colors hover:bg-gray-200 dark:hover:bg-gray-800/60 theme-cyber:hover:bg-gray-900/50">
+        <li className="bg-gray-100 dark:bg-gray-900/50 p-4 rounded-lg flex justify-between items-center transition-colors hover:bg-gray-200 dark:hover:bg-gray-800/60">
             <div>
-                <p className="font-semibold text-slate-800 dark:text-slate-200 theme-cyber:text-cyber-text">{formattedDate}</p>
-                <p className="text-sm text-slate-500 dark:text-slate-400 theme-cyber:text-slate-400">
+                <p className="font-semibold text-slate-800 dark:text-slate-200">{formattedDate}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
                     Пробег: {shift.odometerEnd - shift.odometerStart} км
                 </p>
             </div>
@@ -59,8 +59,8 @@ const ShiftItem: React.FC<{ shift: Shift; onDelete: (id: string) => void; onEdit
 const ShiftList: React.FC<ShiftListProps> = ({ shifts, onDelete, onEdit }) => {
     if (shifts.length === 0) {
         return (
-            <div className="text-center py-10 px-4 bg-gray-100 dark:bg-gray-900/50 theme-cyber:bg-gray-900/30 rounded-lg">
-                <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-300 theme-cyber:text-cyber-text">Нет записей</h3>
+            <div className="text-center py-10 px-4 bg-gray-100 dark:bg-gray-900/50 rounded-lg">
+                <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-300">Нет записей</h3>
                 <p className="text-slate-500 dark:text-slate-500 mt-1">Добавьте свою первую смену, чтобы начать учет.</p>
             </div>
         );
@@ -68,7 +68,7 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, onDelete, onEdit }) => {
 
     return (
         <div>
-            <h2 className="text-xl font-bold text-slate-900 dark:text-slate-200 theme-cyber:text-cyber-secondary mb-4">История смен</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-slate-200 mb-4">История смен</h2>
             <ul className="space-y-3">
                 {shifts.map(shift => (
                     <ShiftItem key={shift.id} shift={shift} onDelete={onDelete} onEdit={onEdit} />

@@ -125,7 +125,7 @@ const App: React.FC = () => {
 
     return (
         <div className={theme}>
-            <div className="min-h-screen bg-gray-50 text-slate-800 dark:bg-black dark:text-slate-300 theme-cyber:bg-cyber-bg theme-cyber:text-cyber-text font-sans transition-colors">
+            <div className="min-h-screen bg-gray-50 text-slate-800 dark:bg-black dark:text-slate-300 font-sans transition-colors">
                 <div className="container mx-auto max-w-2xl p-4 pb-24">
                     {detailView ? (
                         <PeriodDetail 
@@ -137,9 +137,9 @@ const App: React.FC = () => {
                     ) : (
                         <>
                             <header className="py-6 text-center relative">
-                                <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 theme-cyber:text-cyber-secondary">Таксометр</h1>
-                                <p className="text-slate-500 dark:text-slate-400 theme-cyber:text-cyber-text">Ваш личный учет смен</p>
-                                <button onClick={() => setIsSettingsVisible(true)} className="absolute top-6 right-0 p-2 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 theme-cyber:text-cyber-secondary theme-cyber:hover:text-cyber-primary transition-colors">
+                                <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Таксометр</h1>
+                                <p className="text-slate-500 dark:text-slate-400">Ваш личный учет смен</p>
+                                <button onClick={() => setIsSettingsVisible(true)} className="absolute top-6 right-0 p-2 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
                                     <SettingsIcon className="w-6 h-6" />
                                 </button>
                             </header>
@@ -160,11 +160,11 @@ const App: React.FC = () => {
                             </main>
                             
                             {!isFormVisible && (
-                                <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-gray-50 dark:from-black theme-cyber:from-cyber-bg to-transparent">
+                                <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-gray-50 dark:from-black to-transparent">
                                     <div className="max-w-2xl mx-auto">
                                         <button
                                             onClick={handleAddNew}
-                                            className="w-full bg-green-600 hover:bg-green-700 text-white theme-cyber:bg-cyber-primary theme-cyber:hover:bg-pink-600 font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center text-lg transition-transform transform active:scale-95"
+                                            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center text-lg transition-transform transform active:scale-95"
                                         >
                                             <PlusIcon className="w-6 h-6 mr-2" />
                                             Добавить запись
